@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto Loco</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #menu, #game-container {
+            position: absolute;
+            width: 800px;
+            height: 600px;
+            border: 3px solid white;
+            border-radius: 10px;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #menu {
+            display: flex;
+        }
+
+        #menu button {
+            margin: 20px;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #menu button:hover {
+            background: #2a5298;
+        }
+
+        #game-container {
+            display: none;
+        }
+
+        #target {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #ff0000, #ff6666);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #scoreboard, #timer {
+            position: absolute;
+            font-size: 20px;
+            color: white;
+        }
+
+        #scoreboard {
+            top: 10px;
+            left: 10px;
+        }
+
+        #timer {
+            top: 10px;
+            right: 10px;
+        }
+
+        #game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            display: none;
+        }
+
+        #game-over h1 {
+            font-size: 3em;
+            margin: 0;
+            color: #ff3333;
+        }
+
+        #game-over button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #game-over button:hover {
+            background: #2a5298;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu">
+        <h1>Punto Loco</h1>
+        <p>Selecciona tu modo de juego:</p>
+        <button onclick="startGame('easy')">Modo Fácil</button>
+        <button onclick="startGame('hard')">Modo Difícil</button>
+    </div>
+
+    <div id="game-container">
+        <div id="scoreboard">Puntos: 0</div>
+        <div id="timer">Tiempo: 60s</div>
+        <div id="target"></div>
+        <div id="game-over">
+            <h1>¡Tiempo agotado!</h1>
+            <p id="final-score">Puntos finales: 0</p>
+            <button onclick="restartGame()">Reintentar</button>
+        </div>
+    </div>
+
+    <script>
+        const menu = document.getElementById('menu');
+        const gameContainer = document.getElementById('game-container');
+        const target = document.getElementById('target');
+        const scoreboard = document.getElementById('scoreboard');
+        const timerDisplay = document.getElementById('timer');
+        const gameOverScreen = document.getElementById('game-over');
+        const finalScoreDisplay = document.getElementById('final-score');
+
+        let score = 0;
+        let timeLeft = 60;
+        let interval;
+        let timerInterval;
+        let targetSpeed;
+        let difficulty;
+
+
+        const settings = {
+            easy: { initialSpeed: 1500, speedFactor: 0.95, minSpeed: 500 },
+            hard: { initialSpeed: 1000, speedFactor: 0.9, minSpeed: 200 },
+        };
+
+
+        function randomPosition() {
+            const x = Math.random() * (gameContainer.offsetWidth - target.offsetWidth);
+            const y = Math.random() * (gameContainer.offsetHeight - target.offsetHeight);
+            return { x, y };
+        }
+
+
+        function moveTarget() {
+            const { x, y } = randomPosition();
+            target.style.left = `${x}px`;
+            target.style.top = `${y}px`;
+        }
+
+
+        function handleClick() {
+            score++;
+            scoreboard.textContent = `Puntos: ${score}`;
+            targetSpeed = Math.max(
+                settings[difficulty].minSpeed,
+                targetSpeed * settings[difficulty].speedFactor
+            );
+            clearInterval(interval);
+            interval = setInterval(moveTarget, targetSpeed);
+            moveTarget();
+        }
+
+
+        function updateTimer() {
+            timeLeft--;
+            timerDisplay.textContent = `Tiempo: ${timeLeft}s`;
+            if (timeLeft <= 0) {
+                endGame();
+            }
+        }
+
+
+        function endGame() {
+            clearInterval(interval);
+            clearInterval(timerInterval);
+            target.style.display = 'none';
+            gameOverScreen.style.display = 'block';
+            finalScoreDisplay.textContent = `Puntos finales: ${score}`;
+        }
+
+
+        function restartGame() {
+            score = 0;
+            timeLeft = 60;
+            targetSpeed = settings[difficulty].initialSpeed;
+            scoreboard.textContent = `Puntos: ${score}`;
+            timerDisplay.textContent = `Tiempo: ${timeLeft}s`;
+            gameOverScreen.style.display = 'none';
+            target.style.display = 'block';
+            startGame(difficulty);
+        }
+
+
+        function startGame(selectedDifficulty) {
+            difficulty = selectedDifficulty;
+            targetSpeed = settings[difficulty].initialSpeed;
+            menu.style.display = 'none';
+            gameContainer.style.display = 'flex';
+            score = 0;
+            timeLeft = 60;
+            scoreboard.textContent = `Puntos: ${score}`;
+            timerDisplay.textContent = `Tiempo: ${timeLeft}s`;
+            moveTarget();
+            target.addEventListener('click', handleClick);
+            interval = setInterval(moveTarget, targetSpeed);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+    </script>
+</body>
+</html>
