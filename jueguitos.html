@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juegos Estudio Rayan</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap">
+    <style>
+        body {
+            margin: 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+        }
+        .container {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        header img {
+            max-height: 60px;
+        }
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #f39c12;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+        }
+        .game-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .game-list li {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            transition: transform 0.3s, background 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .game-list li:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        .game-list li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .game-list img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        .game-list li:hover img {
+            transform: scale(1.2);
+        }
+        .footer {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #0f2027;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9em;
+            color: #ccc;
+            border-top: 2px solid #f39c12;
+        }
+        .footer a {
+            color: #f39c12;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="logo.png" alt="Logo de la página" id="logo">
+            <p style="font-size: 1.5em; color: white; margin: 0; font-weight: bold;">Jueguitos RYN</p>
+        </div>
+    </header>
+
+        <h1>Selecciona un Juego</h1>
+        <ul class="game-list">
+            <li>
+                <a href="tenis.html">
+                    <img src="tenis-icon.png" alt="Tenis">
+                    <span>Tenis</span>
+                </a>
+            </li>
+            <li>
+                <a href="breakout.html">
+                    <img src="breakout-icon.png" alt="Breakout">
+                    <span>Breakout</span>
+                </a>
+            </li>
+            <li>
+                <a href="tictactoe.html">
+                    <img src="tictactoe-icon.png" alt="Tic Tac Toe">
+                    <span>TicTacToe</span>
+                </a>
+            </li>
+            <li>
+                <a href="serpiente.html">
+                    <img src="serpiente-icon.png" alt="Serpiente">
+                    <span>Serpiente</span>
+                </a>
+            </li>
+            <li>
+                <a href="punto-loco.html">
+                    <img src="punto-loco-icon.png" alt="Punto Loco">
+                    <span>Punto Loco</span>
+                </a>
+            </li>
+            <li>
+                <a href="Jump.html">
+                    <img src="Jump.png" alt="Jump">
+                    <span>Jump</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="footer">
+        © 2025 Juegos Estudios Rayan. Todos los derechos reservados. Diseñado por <a href="estudios Rayan.html">Estudio Rayan</a>.
+    </div>
+</body>
+</html>
